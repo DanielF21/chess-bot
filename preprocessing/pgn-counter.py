@@ -42,7 +42,6 @@ def pgn_filter(input_file, output_file):
     
     print(f"Filtered PGNs written to {output_file}")
 
-# Example usage
 input_file = 'data.pgn'
 output_file = 'filtered_data.pgn'
 
@@ -53,6 +52,4 @@ print(f'Total PGNs: {total_pgns}')
 # Count valid PGNs with mean Elo 1700 or greater
 valid_pgns_count = count_valid_pgns(input_file)
 print(f'Valid PGNs (mean Elo 1700 or greater): {valid_pgns_count}')
-
-# Filter PGNs and write to new file
 pgn_filter(input_file, output_file)

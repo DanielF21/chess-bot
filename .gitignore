@@ -1,4 +1,6 @@
 **/data.pgn
-**/filtered_data.pgn
-data.pgn
-filtered_data.pgn
+**/filtered_dataset.pgn
+**/lichess_endgames.pgn
+**/daniel_openings.pgn
+**/daniel.pgn
+venv/
