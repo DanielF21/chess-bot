@@ -10,7 +10,7 @@ def concat_pgn_files(openings_file, endgames_file):
     print(f"Appended {openings_file} to the end of {endgames_file}")
 
 # Usage
-openings_file = 'daniel_openings.pgn'
+openings_file = 'daniel_openings_scaled.pgn'
 endgames_file = 'lichess_endgames.pgn'
 
 concat_pgn_files(openings_file, endgames_file)
