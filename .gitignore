@@ -5,4 +5,8 @@
 **/daniel.pgn
 **/games.txt
 **/data.txt
+**/dataset.txt
 venv/
+
+
+**/best_chess_model.pth

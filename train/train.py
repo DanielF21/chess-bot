@@ -9,7 +9,6 @@ import time
 from torch.cuda.amp import GradScaler, autocast
 
 def train_model(num_epochs=50, batch_size=1024, learning_rate=0.001, data_file="dataset.txt"):
-    # Load data
     train_loader, test_loader = create_data_loaders(data_file, batch_size=batch_size)
 
     # Initialize model, loss function, and optimizer
@@ -18,37 +17,31 @@ def train_model(num_epochs=50, batch_size=1024, learning_rate=0.001, data_file="
     criterion = nn.BCEWithLogitsLoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-    # Learning rate scheduler
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=5, verbose=True)
 
-    # Lists to store metrics
     train_losses = []
     test_losses = []
 
-    # Early stopping parameters
     best_test_loss = float('inf')
     patience = 10
     trigger_times = 0
 
-    # Initialize gradient scaler for mixed precision training
     scaler = GradScaler()
 
     # Epochs to save the model
     save_epochs = {1, 2, 3, 5, 10, 15, 20, 25}
 
-    # Training loop
+    # Training
     for epoch in range(num_epochs):
         model.train()
         total_train_loss = 0
         epoch_start_time = time.time()
 
-        # Wrap train_loader with tqdm for progress bar
         train_pbar = tqdm(train_loader, desc=f"Epoch {epoch+1}/{num_epochs} [Train]")
         for inputs, labels in train_pbar:
             inputs, labels = inputs.to(device), labels.to(device)
             optimizer.zero_grad()
 
-            # Use mixed precision training
             with autocast():
                 outputs = model(inputs)
                 loss = criterion(outputs, labels)
@@ -59,7 +52,6 @@ def train_model(num_epochs=50, batch_size=1024, learning_rate=0.001, data_file="
 
             total_train_loss += loss.item()
 
-            # Update progress bar description with current loss
             train_pbar.set_postfix({'loss': f'{loss.item():.4f}'})
 
         avg_train_loss = total_train_loss / len(train_loader)
@@ -76,13 +68,11 @@ def train_model(num_epochs=50, batch_size=1024, learning_rate=0.001, data_file="
                 loss = criterion(outputs, labels)
                 total_test_loss += loss.item()
 
-                # Update progress bar description with current loss
                 test_pbar.set_postfix({'loss': f'{loss.item():.4f}'})
 
         avg_test_loss = total_test_loss / len(test_loader)
         test_losses.append(avg_test_loss)
 
-        # Step the scheduler
         scheduler.step(avg_test_loss)
 
         # Check for early stopping
@@ -110,7 +100,7 @@ def train_model(num_epochs=50, batch_size=1024, learning_rate=0.001, data_file="
               f"Test Loss: {avg_test_loss:.4f}, "
               f"Time: {epoch_duration:.2f}s")
 
-    # Plot training and validation loss
+    # Plot loss
     plt.figure(figsize=(10, 5))
     plt.plot(train_losses, label='Training Loss')
     plt.plot(test_losses, label='Validation Loss')

@@ -58,7 +58,6 @@ class ChessDataset(Dataset):
                     color = parts[-3]
                     moved_from = int(parts[-2])
                     moved_to = int(parts[-1])
-                    # Augment data
                     augmented_data = augment_data(fen, moved_from, moved_to)
                     self.data.extend(augmented_data)
                 else:
