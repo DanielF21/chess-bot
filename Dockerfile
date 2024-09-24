@@ -13,10 +13,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Lc0 (update this URL to the latest version)
-RUN wget https://github.com/LeelaChessZero/lc0/releases/download/v0.31.1/lc0-v0.31.1-linux-x64.tar.gz \  # Updated URL
-    && tar -xzf lc0-v0.31.1-linux-x64.tar.gz \  # Updated filename
-    && mv lc0 /usr/local/bin/ \ 
-    && rm lc0-v0.31.1-linux-x64.tar.gz  # Updated filename
+RUN wget https://github.com/LeelaChessZero/lc0/releases/download/v0.31.1/lc0-v0.31.1-linux-x64.tar.gz \ 
+    && tar -xzf lc0-v0.31.1-linux-x64.tar.gz \
+    && mv lc0 /usr/local/bin/ \
+    && rm lc0-v0.31.1-linux-x64.tar.gz
 
 # Copy requirements.txt and install Python dependencies
 COPY requirements.txt .
