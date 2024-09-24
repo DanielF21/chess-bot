@@ -9,3 +9,4 @@ google-cloud-storage
 torch
 torchvision
 gunicorn
+flask-cors==5.0.0
