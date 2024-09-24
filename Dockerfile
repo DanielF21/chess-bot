@@ -23,12 +23,16 @@ RUN wget https://github.com/LeelaChessZero/lc0/archive/refs/tags/v0.31.1.tar.gz 
     && cd lc0 \
     && meson setup build \
     && meson compile -C build \
+    && cp build/lc0 /usr/local/bin/  \
     && cd /app \
     && rm v0.31.1.tar.gz
 
 # Copy requirements.txt and install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the model file into the container
+COPY model.pb.gz /app/
 
 # Copy the current directory contents into the container at /app
 COPY . /app

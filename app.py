@@ -3,8 +3,13 @@ import chess
 import chess.engine
 import os
 import sys
+import subprocess
+import logging
 
 app = Flask(__name__)
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
 
 # Initialize the chess board and engine
 board = chess.Board()
@@ -15,10 +20,19 @@ if not os.path.exists(model_path):
     raise FileNotFoundError(f"Model file not found: {model_path}")
 
 lc0_command = ["lc0", f"--weights={model_path}"]
+
+# Check Lc0 version
+try:
+    result = subprocess.run(['lc0', '--version'], capture_output=True, text=True)
+    logging.info(f"Lc0 version: {result.stdout.strip()}")
+except FileNotFoundError:
+    logging.error("Lc0 not found. Please check the installation.")
+    sys.exit(1)
+
 try:
     engine = chess.engine.SimpleEngine.popen_uci(lc0_command)
 except Exception as e:
-    print(f"Error initializing Lc0 engine: {e}")
+    logging.error(f"Error initializing Lc0 engine: {e}")
     sys.exit(1)
 
 @app.route('/move', methods=['POST'])
