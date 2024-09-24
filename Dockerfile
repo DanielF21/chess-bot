@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     libxcb-xinerama0 \
     wget \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Lc0 (update this URL to the latest version)
