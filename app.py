@@ -32,7 +32,7 @@ engine = initialize_engine()
 
 @app.route('/move', methods=['POST'])
 def make_move():
-    global engine
+    global engine, board
     data = request.json
     move_uci = data.get('move')
     if not move_uci:
@@ -43,11 +43,27 @@ def make_move():
         if move in board.legal_moves:
             board.push(move)
             
+            if board.is_game_over():
+                result = get_game_result(board)
+                return jsonify({
+                    "player_move": move_uci,
+                    "game_over": True,
+                    "result": result
+                })
+            
             # Attempt to get AI move, reinitialize engine if it fails
             for _ in range(3):  # Try up to 3 times
                 try:
                     ai_move = get_ai_move(engine, board)
                     board.push(ai_move)
+                    if board.is_game_over():
+                        result = get_game_result(board)
+                        return jsonify({
+                            "player_move": move_uci,
+                            "ai_move": ai_move.uci(),
+                            "game_over": True,
+                            "result": result
+                        })
                     return jsonify({"player_move": move_uci, "ai_move": ai_move.uci()})
                 except chess.engine.EngineTerminatedError:
                     logging.warning("Engine terminated. Attempting to restart...")
@@ -65,8 +81,13 @@ def make_move():
 
 @app.route('/reset', methods=['POST'])
 def reset_game():
-    global board
+    global board, engine
     board.reset()
+    if engine:
+        engine.quit()
+    engine = initialize_engine()
+    if not engine:
+        return jsonify({"error": "Failed to initialize chess engine"}), 500
     return jsonify({"status": "Game reset"})
 
 @app.route('/board', methods=['GET'])
@@ -78,6 +99,20 @@ def get_ai_move(engine, board):
         raise chess.engine.EngineTerminatedError("Engine not initialized")
     result = engine.play(board, chess.engine.Limit(time=0.1))
     return result.move
+
+def get_game_result(board):
+    if board.is_checkmate():
+        return "checkmate"
+    elif board.is_stalemate():
+        return "stalemate"
+    elif board.is_insufficient_material():
+        return "insufficient material"
+    elif board.is_fifty_moves():
+        return "fifty-move rule"
+    elif board.is_repetition():
+        return "threefold repetition"
+    else:
+        return "draw"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
