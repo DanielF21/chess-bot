@@ -8,3 +8,4 @@ tqdm
 google-cloud-storage
 torch
 torchvision
+gunicorn

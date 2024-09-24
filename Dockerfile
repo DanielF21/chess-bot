@@ -10,7 +10,6 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     libxcb-xinerama0 \
     wget \
-    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Lc0
@@ -19,15 +18,18 @@ RUN wget https://github.com/LeelaChessZero/lc0/releases/download/v0.29.0/lc0-v0.
     && mv lc0 /usr/local/bin/ \
     && rm lc0-v0.29.0-linux-x64.tar.gz
 
-# Copy requirements.txt and install dependencies
+# Copy requirements.txt and install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-# Make port 5000 available to the world outside this container
-EXPOSE 5000
+# Make port 10000 available to the world outside this container
+EXPOSE 10000
+
+# Set environment variables
+ENV PORT=10000
 
 # Run app.py when the container launches
-CMD ["python", "app.py"]
+CMD gunicorn app:app
