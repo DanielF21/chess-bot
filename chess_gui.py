@@ -1,3 +1,4 @@
+
 import os
 import sys
 import chess
@@ -16,7 +17,7 @@ class PromotionDialog(QDialog):
         piece_names = {'q': 'Queen', 'r': 'Rook', 'b': 'Bishop', 'n': 'Knight'}
         for i, piece in enumerate(pieces):
             button = QPushButton()
-            pixmap = QPixmap(f"images/{'white' if color else 'black'}_{piece}.png")
+            pixmap = QPixmap(f"images/{'white' if color else 'black'}_{piece}.gif")
             icon = QIcon(pixmap)
             button.setIcon(icon)
             button.setIconSize(QSize(50, 50))

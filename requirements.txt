@@ -1,9 +1,10 @@
+Flask
 PyQt5
 python-chess
-torch
-torchvision
-torchaudio
+tensorflow
 numpy
 matplotlib
 tqdm
 google-cloud-storage
+torch
+torchvision
