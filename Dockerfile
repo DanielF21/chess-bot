@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     libxcb-xinerama0 \
     wget \
     git \
+    zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Lc0 (update this URL to the latest version)
@@ -26,6 +27,9 @@ RUN wget https://github.com/LeelaChessZero/lc0/archive/refs/tags/v0.31.1.tar.gz 
     && cp build/lc0 /usr/local/bin/  \
     && cd /app \
     && rm v0.31.1.tar.gz
+
+# Verify Lc0 installation
+RUN which lc0 && lc0 --version
 
 # Copy requirements.txt and install Python dependencies
 COPY requirements.txt .
