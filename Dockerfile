@@ -20,7 +20,7 @@ RUN wget https://github.com/LeelaChessZero/lc0/archive/refs/tags/v0.31.1.tar.gz 
     && mv lc0-0.31.1 lc0 \
     && mkdir /app/lc0/build \
     && cd /app/lc0/build \
-    && cmake .. \
+    && cmake ../lc0 \
     && make \
     && rm v0.31.1.tar.gz
 
