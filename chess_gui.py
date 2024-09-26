@@ -54,7 +54,7 @@ class ChessGUI(QWidget):
         self.player_color = chess.WHITE  # Player is white, AI is black
         
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        model_path = os.path.join(current_dir, "model.pth")
+        model_path = os.path.join(current_dir, "model.pb.gz")
         
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Maia model file not found: {model_path}")
