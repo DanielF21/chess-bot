@@ -47,6 +47,7 @@ def make_move():
                 result = get_game_result(board)
                 return jsonify({
                     "player_move": move_uci,
+                    "ai_move": None,  # Explicitly state no AI move
                     "game_over": True,
                     "result": result
                 })
