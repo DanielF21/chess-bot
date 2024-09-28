@@ -18,6 +18,14 @@ This repository contains the backend code for the DanielBot chess engine, playab
 
 To play against DanielBot on your local machine:
 
-1. Clone this repository: git clone https://github.com/DanielF21/chess-bot.git
-2.  Install the required dependencies: pip install -r requirements.txt
-3. Run the chess GUI: python chess_gui.py
+1. Clone this repository: 
+```
+git clone https://github.com/DanielF21/chess-bot.git
+```
+2.  Install the required dependencies: 
+```
+pip install -r requirements.txt
+```
+3. Run the chess GUI: 
+```
+python chess_gui.py
