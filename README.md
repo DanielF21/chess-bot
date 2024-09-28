@@ -1,6 +1,6 @@
 # DanielBot Chess Engine
 
-This repository contains the backend code for the DanielBot chess engine, playable at [danielfleming.xyz](https://danielfleming.xyz).
+This repository contains the backend code for the DanielBot chess engine, playable at [danielfleming.xyz/chess](https://danielfleming.xyz/chess).
 
 ## Project Structure
 
