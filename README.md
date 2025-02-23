@@ -28,4 +28,4 @@ pip install -r requirements.txt
 ```
 3. Run the chess GUI: 
 ```
-python chess_gui.py
+python chess_gui.py 
