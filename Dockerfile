@@ -1,18 +1,15 @@
-# Use an official Python runtime as a parent image
-FROM python:3.12-slim
+FROM python:3.12-slim-bookworm
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
+# Install system dependencies.
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     meson \
     ninja-build \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
-    libxcb-xinerama0 \
     wget \
+    ca-certificates \
     git \
     zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
